@@ -246,6 +246,7 @@ typename Vector<T>::iterator Vector<T>::Insert(Vector::const_iterator pos, S&& v
 
 template<typename T>
 typename Vector<T>::iterator Vector<T>::Erase(Vector::const_iterator pos) {
+    assert(pos >= begin() && pos < end());
     size_t pos_distance = std::distance(cbegin(), pos);
     
     if constexpr (std::is_nothrow_move_constructible_v<T> || !std::is_copy_constructible_v<T>) {
@@ -263,6 +264,7 @@ typename Vector<T>::iterator Vector<T>::Erase(Vector::const_iterator pos) {
 template<typename T>
 template<typename... Args>
 typename Vector<T>::iterator Vector<T>::Emplace(Vector::const_iterator pos, Args&& ... args) {
+    assert(pos >= begin() && pos <= end());
     size_t pos_distance = std::distance(cbegin(), pos);
     
     if (data_.Capacity() == size_) {
